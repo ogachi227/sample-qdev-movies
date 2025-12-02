@@ -69,4 +69,47 @@ public class MovieService {
         }
         return Optional.ofNullable(movieMap.get(id));
     }
+
+    /**
+     * Search movies based on provided criteria
+     * @param name Movie name to search for (case-insensitive, partial match)
+     * @param id Movie ID to search for (exact match)
+     * @param genre Movie genre to search for (case-insensitive, partial match)
+     * @return List of movies matching the search criteria
+     */
+    public List<Movie> searchMovies(String name, Long id, String genre) {
+        logger.info("Searching movies with criteria - name: {}, id: {}, genre: {}", name, id, genre);
+        
+        List<Movie> results = new ArrayList<>();
+        
+        for (Movie movie : movies) {
+            boolean matches = true;
+            
+            // Filter by ID if provided
+            if (id != null && movie.getId() != id.longValue()) {
+                matches = false;
+            }
+            
+            // Filter by name if provided (case-insensitive partial match)
+            if (matches && name != null && !name.trim().isEmpty()) {
+                if (!movie.getMovieName().toLowerCase().contains(name.toLowerCase().trim())) {
+                    matches = false;
+                }
+            }
+            
+            // Filter by genre if provided (case-insensitive partial match)
+            if (matches && genre != null && !genre.trim().isEmpty()) {
+                if (!movie.getGenre().toLowerCase().contains(genre.toLowerCase().trim())) {
+                    matches = false;
+                }
+            }
+            
+            if (matches) {
+                results.add(movie);
+            }
+        }
+        
+        logger.info("Found {} movies matching search criteria", results.size());
+        return results;
+    }
 }

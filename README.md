@@ -6,6 +6,7 @@ A simple movie catalog web application built with Spring Boot, demonstrating Jav
 
 - **Movie Catalog**: Browse 12 classic movies with detailed information
 - **Movie Details**: View comprehensive information including director, year, genre, duration, and description
+- **Movie Search**: Search and filter movies by name, ID, or genre with an intuitive web form
 - **Customer Reviews**: Each movie includes authentic customer reviews with ratings and avatars
 - **Responsive Design**: Mobile-first design that works on all devices
 - **Modern UI**: Dark theme with gradient backgrounds and smooth animations
@@ -39,6 +40,7 @@ The application will start on `http://localhost:8080`
 
 - **Movie List**: http://localhost:8080/movies
 - **Movie Details**: http://localhost:8080/movies/{id}/details (where {id} is 1-12)
+- **Movie Search**: http://localhost:8080/movies/search (with optional query parameters)
 
 ## Building for Production
 
@@ -74,7 +76,7 @@ src/
 ```
 GET /movies
 ```
-Returns an HTML page displaying all movies with ratings and basic information.
+Returns an HTML page displaying all movies with ratings and basic information. Includes a search form for filtering movies.
 
 ### Get Movie Details
 ```
@@ -89,6 +91,34 @@ Returns an HTML page with detailed movie information and customer reviews.
 ```
 http://localhost:8080/movies/1/details
 ```
+
+### Search Movies
+```
+GET /movies/search
+```
+Returns an HTML page with filtered movie results based on search criteria. Uses the same template as the movie list but shows only matching results.
+
+**Query Parameters (all optional):**
+- `name` (string): Movie name to search for (case-insensitive, partial match)
+- `id` (number): Movie ID to search for (exact match)
+- `genre` (string): Movie genre to search for (case-insensitive, partial match)
+
+**Examples:**
+```
+http://localhost:8080/movies/search?name=prison
+http://localhost:8080/movies/search?genre=drama
+http://localhost:8080/movies/search?id=1
+http://localhost:8080/movies/search?name=family&genre=crime
+```
+
+**Features:**
+- Case-insensitive search for name and genre
+- Partial matching for name and genre fields
+- Exact matching for ID field
+- Multiple criteria can be combined
+- Empty results are handled gracefully with user-friendly messages
+- Search form preserves user input after submission
+- Input validation with error handling
 
 ## Troubleshooting
 
@@ -111,8 +141,24 @@ mvn clean compile
 This project is designed as a demonstration application. Feel free to:
 - Add more movies to the catalog
 - Enhance the UI/UX
-- Add new features like search or filtering
+- Add new features like advanced search filters or sorting
 - Improve the responsive design
+- Add more comprehensive search capabilities
+
+## Recent Updates
+
+### Movie Search and Filtering Feature
+- **New Endpoint**: `/movies/search` - Search and filter movies by name, ID, or genre
+- **Enhanced UI**: Added search form with input fields for name, ID, and genre
+- **Smart Filtering**: Case-insensitive partial matching for name and genre, exact matching for ID
+- **User Experience**: 
+  - Search form preserves user input after submission
+  - Clear search functionality to reset filters
+  - Friendly "no results" message with pirate-themed styling
+  - Search results summary showing criteria and count
+- **Error Handling**: Input validation with user-friendly error messages
+- **Testing**: Comprehensive unit tests for search functionality
+- **Documentation**: Updated API documentation with search examples
 
 ## License
 
