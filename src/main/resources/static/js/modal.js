@@ -44,7 +44,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Star rating functionality
+// Combined DOMContentLoaded functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Check if page was loaded after successful review submission
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('reviewAdded') === 'true') {
+        // Scroll to reviews section
+        setTimeout(() => {
+            const reviewsSection = document.querySelector('.reviews-section');
+            if (reviewsSection) {
+                reviewsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }, 100);
+    }
+
+    // Star rating functionality
     const stars = document.querySelectorAll('.star');
     const ratingInput = document.getElementById('rating');
     
