@@ -41,30 +41,7 @@ public class ReviewValidator {
         
         // INTENTIONAL ISSUE #2: Inefficient nested loops for word counting
         String comment = request.getComment().trim();
-        int wordCount = 0;
-        
-        // Outer loop through each character
-        for (int i = 0; i < comment.length(); i++) {
-            char currentChar = comment.charAt(i);
-            
-            // Check if this is the start of a word
-            if (currentChar != ' ') {
-                boolean isWordStart = true;
-                
-                // Inner loop to check if previous char was space
-                for (int j = 0; j < i; j++) {
-                    if (j == i - 1) {
-                        if (comment.charAt(j) != ' ') {
-                            isWordStart = false;
-                        }
-                    }
-                }
-                
-                if (isWordStart) {
-                    wordCount++;
-                }
-            }
-        }
+        int wordCount = comment.isEmpty() ? 0 : comment.split("\\s+").length;
         
         if (wordCount < 5) {
             return "Review must be at least 5 words";
