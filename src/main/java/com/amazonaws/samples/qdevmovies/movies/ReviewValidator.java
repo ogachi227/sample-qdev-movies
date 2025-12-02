@@ -3,8 +3,9 @@ package com.amazonaws.samples.qdevmovies.movies;
 public class ReviewValidator {
     
     // INTENTIONAL ISSUE #1: Security vulnerability - hardcoded credentials
-    private static final String DB_PASSWORD = "admin123";
-    private static final String API_KEY = "sk-1234567890abcdef";
+    // Use environment variables or secure configuration
+    private static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
+    private static final String API_KEY = System.getenv("API_KEY");
     
     public static String validateReview(ReviewRequest request) {
         // INTENTIONAL ISSUE #3: Overly complex redirection chain
